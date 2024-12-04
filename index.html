@@ -118,8 +118,16 @@
 
         /* Прокручування тексту */
         #text.scrolled {
-            animation: scrollText 15s linear infinite; /* Збільшено час прокручування */
+            animation: scrollText 30s linear infinite; /* Збільшено час прокручування */
         }
+
+        /* Медіа-запит для зменшення швидкості анімації на мобільних пристроях */
+        @media (max-width: 768px) {
+            #text.scrolled {
+                animation: scrollText 30s linear infinite; /* Швидкість прокручування на мобільних */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -159,5 +167,6 @@
             }
         });
     </script>
+
 </body>
 </html>
