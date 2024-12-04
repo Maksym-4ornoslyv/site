@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магічна кнопка</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            overflow: hidden;
+            position: relative;
+        }
+
+        button {
+            font-size: 24px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            z-index: 10; /* Забезпечує, що кнопка буде поверх всього */
+        }
+
+        button:hover {
+            background-color: #ff3300;
+        }
+
+        #backgroundImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            z-index: -1;
+            animation: stretchBackground 5s forwards;
+        }
+
+        @keyframes stretchBackground {
+            0% {
+                object-position: center;
+            }
+            100% {
+                object-position: center top;
+                height: 150%;
+                width: 100%;
+            }
+        }
+
+        #flyingImage {
+            position: absolute;
+            width: 200px;  /* Збільшили розмір літаючого фото */
+            height: 200px; /* Збільшили розмір літаючого фото */
+            object-fit: contain;
+            z-index: -1;
+            display: none;
+            animation: fly 3s infinite;
+        }
+
+        @keyframes fly {
+            0% {
+                top: 50%;
+                left: 50%;
+            }
+            25% {
+                top: 10%;
+                left: 10%;
+            }
+            50% {
+                top: 10%;
+                left: 90%;
+            }
+            75% {
+                top: 90%;
+                left: 90%;
+            }
+            100% {
+                top: 90%;
+                left: 10%;
+            }
+        }
+
+        #scrollingText {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 25%;
+            height: 100%;
+            color: white;
+            font-size: 18px;
+            line-height: 1.5;
+            padding: 20px;
+            overflow: hidden;
+            animation: scrollText 20s linear infinite;
+            z-index: 5;
+            display: none; /* Текст прихований спочатку */
+        }
+
+        @keyframes scrollText {
+            0% {
+                top: 100%;
+            }
+            100% {
+                top: -100%;
+            }
+        }
+
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="startButton">Натисни мене</button>
+    <img id="backgroundImage" src="background.jpg" alt="Фон">
+    <img id="flyingImage" src="flying_image.png" alt="Летюча картинка">
+    <div id="scrollingText">
+        <p>Дорога Насте!</p>
+        <p>Вітаю тебе з найособливішим святом — твоїм Днем народження! Сьогодні твій день, і я хочу, щоб цей момент став початком нової, ще більш захоплюючої та яскравої частини твоєї подорожі по життю. Ти заслуговуєш на найкраще, і сьогодні всі твої мрії можуть стати реальністю, навіть якщо вони здаються далекими чи недосяжними. Життя дарує нам можливість почати нові етапи, шукати нові можливості, долати труднощі і сміятися з усього, що нас оточує.</p>
+        <p>Я хочу, щоб ти завжди залишалася такою ж неймовірною, яка ти є — сильною, розумною, чуйною, доброю і, без сумніву, надзвичайно талановитою. Твоя енергія і оптимізм надихають тих, хто тебе оточує, і я знаю, що навіть у найскладніші моменти ти здатна знаходити сили йти вперед і вірити в краще. Ти завжди додаєш світла в життя людей, і це неймовірно цінно.</p>
+        <p>Нехай цей новий рік твого життя принесе тобі безліч чудових моментів — від маленьких радощів до великих перемог. Нехай твій шлях буде наповнений теплом, підтримкою близьких, а також безліччю нових вражень і можливостей. Бажаю тобі знайти час для себе, для того, щоб насолоджуватися простими речами: сміхом з друзями, прогулянками на свіжому повітрі, митями спокою і радості. Нехай кожен твій день буде наповнений гармонією і щастям, а всі труднощі і перешкоди залишаються лише тимчасовими.</p>
+        <p>Нехай твої мрії завжди будуть поруч з тобою, і нехай ти йдеш до них впевнено і з радістю в серці. Не бійтеся мріяти великими мріями і діяти, адже цей світ безмежний, і ти можеш досягти всього, чого прагнеш. Бажаю тобі відчувати підтримку і любов кожного дня, щоб твоя душа була в мирі з собою і з усім світом.</p>
+        <p>Ти — це чудова особистість, і я горджуся тим, що знаю тебе. Спільно пройдені моменти — це незабутні спогади, а твоя присутність у моєму житті — це безцінний дар. Бажаю тобі залишатися такою ж, як ти є, і завжди знаходити сили для нових звершень і радості. Нехай цей рік принесе тобі найбільше щастя, а всі твої бажання збудуться!</p>
+        <p>З найкращими побажаннями та обіймами, Максим</p>
+    </div>
+    <audio id="music" src="music.mp3" loop></audio>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            // Змінюємо стиль кнопки та фон
+            document.body.style.justifyContent = 'flex-start';
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('backgroundImage').style.display = 'block';
+            document.getElementById('flyingImage').style.display = 'block';
+            document.getElementById('scrollingText').style.display = 'block'; // Текст стає видимим
+            document.getElementById('music').play(); // Музика починає грати
+
+            // Початок анімації для літаючого зображення
+            document.getElementById('flyingImage').style.animation = 'fly 3s infinite';
+
+            // Перехід у повноекранний режим
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+        });
+    </script>
+
+</body>
+</html>
