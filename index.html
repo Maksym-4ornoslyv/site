@@ -13,7 +13,7 @@
             align-items: center;
             background-color: #000;
             overflow: hidden;
-            position: relative;
+            font-family: Arial, sans-serif;
         }
 
         button {
@@ -25,46 +25,38 @@
             border: none;
             border-radius: 10px;
             transition: background-color 0.3s ease;
-            z-index: 10; /* Забезпечує, що кнопка буде поверх всього */
         }
 
         button:hover {
             background-color: #ff3300;
         }
 
+        /* Фон без анімацій */
         #backgroundImage {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            display: none;
+            background-image: url('background.jpg'); /* Ваше фонове зображення */
+            background-size: 100% 100%; /* Розтягуємо фон по ширині та висоті */
+            background-position: center; /* Фіксуємо фон в центрі */
+            display: none; /* Спочатку приховано */
             z-index: -1;
-            animation: stretchBackground 5s forwards;
         }
 
-        @keyframes stretchBackground {
-            0% {
-                object-position: center;
-            }
-            100% {
-                object-position: center top;
-                height: 150%;
-                width: 100%;
-            }
-        }
-
+        /* Літаюче зображення */
         #flyingImage {
             position: absolute;
-            width: 200px;  /* Збільшили розмір літаючого фото */
-            height: 200px; /* Збільшили розмір літаючого фото */
+            width: 100px;
+            height: 100px;
             object-fit: contain;
             z-index: -1;
             display: none;
-            animation: fly 3s infinite;
+            animation: fly 3s infinite; /* Літаюче зображення анімується */
         }
 
+        /* Анімація для літаючого зображення */
         @keyframes fly {
             0% {
                 top: 50%;
@@ -88,77 +80,84 @@
             }
         }
 
-        #scrollingText {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 25%;
-            height: 100%;
-            color: white;
-            font-size: 18px;
-            line-height: 1.5;
-            padding: 20px;
-            overflow: hidden;
-            animation: scrollText 20s linear infinite;
-            z-index: 5;
-            display: none; /* Текст прихований спочатку */
-        }
-
-        @keyframes scrollText {
-            0% {
-                top: 100%;
-            }
-            100% {
-                top: -100%;
-            }
-        }
-
         audio {
             display: none;
+        }
+
+        /* Стилі для тексту */
+        #text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30%;
+            color: white;
+            font-size: 24px;
+            line-height: 1.5;
+            text-align: left;
+            padding: 20px;
+            z-index: 1; /* Текст поверх фону */
+            display: block;
+            max-width: 80%;
+            margin: 0 auto;
+            display: none; /* Спочатку приховано */
+            overflow: hidden;
+        }
+
+        /* Анімація прокручування тексту знизу вгору */
+        @keyframes scrollText {
+            0% {
+                transform: translateY(100%); /* Початок тексту за межами екрану знизу */
+            }
+            90% {
+                transform: translateY(-10%); /* Текст починає знову після 90% прокручування */
+            }
+            100% {
+                transform: translateY(-100%); /* Текст прокручується до кінця */
+            }
+        }
+
+        /* Прокручування тексту */
+        #text.scrolled {
+            animation: scrollText 15s linear infinite; /* Збільшено час прокручування */
         }
     </style>
 </head>
 <body>
 
     <button id="startButton">Натисни мене</button>
-    <img id="backgroundImage" src="background.jpg" alt="Фон">
+    <div id="backgroundImage"></div> <!-- Статичний фон -->
     <img id="flyingImage" src="flying_image.png" alt="Летюча картинка">
-    <div id="scrollingText">
-        <p>Дорога Насте!</p>
-        <p>Вітаю тебе з найособливішим святом — твоїм Днем народження! Сьогодні твій день, і я хочу, щоб цей момент став початком нової, ще більш захоплюючої та яскравої частини твоєї подорожі по життю. Ти заслуговуєш на найкраще, і сьогодні всі твої мрії можуть стати реальністю, навіть якщо вони здаються далекими чи недосяжними. Життя дарує нам можливість почати нові етапи, шукати нові можливості, долати труднощі і сміятися з усього, що нас оточує.</p>
-        <p>Я хочу, щоб ти завжди залишалася такою ж неймовірною, яка ти є — сильною, розумною, чуйною, доброю і, без сумніву, надзвичайно талановитою. Твоя енергія і оптимізм надихають тих, хто тебе оточує, і я знаю, що навіть у найскладніші моменти ти здатна знаходити сили йти вперед і вірити в краще. Ти завжди додаєш світла в життя людей, і це неймовірно цінно.</p>
-        <p>Нехай цей новий рік твого життя принесе тобі безліч чудових моментів — від маленьких радощів до великих перемог. Нехай твій шлях буде наповнений теплом, підтримкою близьких, а також безліччю нових вражень і можливостей. Бажаю тобі знайти час для себе, для того, щоб насолоджуватися простими речами: сміхом з друзями, прогулянками на свіжому повітрі, митями спокою і радості. Нехай кожен твій день буде наповнений гармонією і щастям, а всі труднощі і перешкоди залишаються лише тимчасовими.</p>
-        <p>Нехай твої мрії завжди будуть поруч з тобою, і нехай ти йдеш до них впевнено і з радістю в серці. Не бійтеся мріяти великими мріями і діяти, адже цей світ безмежний, і ти можеш досягти всього, чого прагнеш. Бажаю тобі відчувати підтримку і любов кожного дня, щоб твоя душа була в мирі з собою і з усім світом.</p>
-        <p>Ти — це чудова особистість, і я горджуся тим, що знаю тебе. Спільно пройдені моменти — це незабутні спогади, а твоя присутність у моєму житті — це безцінний дар. Бажаю тобі залишатися такою ж, як ти є, і завжди знаходити сили для нових звершень і радості. Нехай цей рік принесе тобі найбільше щастя, а всі твої бажання збудуться!</p>
-        <p>З найкращими побажаннями та обіймами, Максим</p>
-    </div>
-    <audio id="music" src="music.mp3" loop></audio>
+    <p id="text">Дорога Насте!<br><br>
+    Вітаю тебе з найособливішим святом — твоїм Днем народження! Сьогодні твій день, і я хочу, щоб цей момент став початком нової, ще більш захоплюючої та яскравої частини твоєї подорожі по життю. Ти заслуговуєш на найкраще, і сьогодні всі твої мрії можуть стати реальністю, навіть якщо вони здаються далекими чи недосяжними. Життя дарує нам можливість почати нові етапи, шукати нові можливості, долати труднощі і сміятися з усього, що нас оточує.<br><br>
+    Я хочу, щоб ти завжди залишалася такою ж неймовірною, яка ти є — сильною, розумною, чуйною, доброю і, без сумніву, надзвичайно талановитою. Твоя енергія і оптимізм надихають тих, хто тебе оточує, і я знаю, що навіть у найскладніші моменти ти здатна знаходити сили йти вперед і вірити в краще. Ти завжди додаєш світла в життя людей, і це неймовірно цінно.<br><br>
+    Нехай цей новий рік твого життя принесе тобі безліч чудових моментів — від маленьких радощів до великих перемог. Нехай твій шлях буде наповнений теплом, підтримкою близьких, а також безліччю нових вражень і можливостей. Бажаю тобі знайти час для себе, для того, щоб насолоджуватися простими речами: сміхом з друзями, прогулянками на свіжому повітрі, митями спокою і радості. Нехай кожен твій день буде наповнений гармонією і щастям, а всі труднощі і перешкоди залишаються лише тимчасовими.<br><br>
+    Нехай твої мрії завжди будуть поруч з тобою, і нехай ти йдеш до них впевнено і з радістю в серці. Не бійтеся мріяти великими мріями і діяти, адже цей світ безмежний, і ти можеш досягти всього, чого прагнеш. Бажаю тобі відчувати підтримку і любов кожного дня, щоб твоя душа була в мирі з собою і з усім світом.<br><br>
+    Ти — це чудова особистість, і я горджуся тим, що знаю тебе. Спільно пройдені моменти — це незабутні спогади, а твоя присутність у моєму житті — це безцінний дар. Бажаю тобі залишатися такою ж, як ти є, і завжди знаходити сили для нових звершень і радості. Нехай цей рік принесе тобі найбільше щастя, а всі твої бажання збудуться!<br><br>
+    З найкращими побажаннями та обіймами,<br>
+    Максим</p>
+
+    <audio id="music" src="music.mp3" autoplay loop></audio>
 
     <script>
         document.getElementById('startButton').addEventListener('click', function() {
             // Змінюємо стиль кнопки та фон
             document.body.style.justifyContent = 'flex-start';
-            document.getElementById('startButton').style.display = 'none';
-            document.getElementById('backgroundImage').style.display = 'block';
-            document.getElementById('flyingImage').style.display = 'block';
-            document.getElementById('scrollingText').style.display = 'block'; // Текст стає видимим
-            document.getElementById('music').play(); // Музика починає грати
+            document.getElementById('startButton').style.display = 'none'; // Сховуємо кнопку
+            document.getElementById('backgroundImage').style.display = 'block'; // Показуємо фон
+            document.getElementById('flyingImage').style.display = 'block'; // Показуємо літаюче зображення
+            document.getElementById('text').style.display = 'block'; // Показуємо текст
+            document.getElementById('music').play(); // Початок музики
 
-            // Початок анімації для літаючого зображення
-            document.getElementById('flyingImage').style.animation = 'fly 3s infinite';
+            // Додаємо клас для анімації
+            document.getElementById('text').classList.add('scrolled');
 
             // Перехід у повноекранний режим
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
             } else if (document.documentElement.mozRequestFullScreen) { // Firefox
                 document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
             }
         });
     </script>
-
 </body>
 </html>
